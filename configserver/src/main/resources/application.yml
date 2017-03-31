@@ -1,0 +1,22 @@
+spring:
+# 启动环境，可通过启动命令配置
+# profiles:
+#  active: dev
+ application:
+  name: config-server
+ cloud:
+  #spring config的配置.配置相应的GitHub地址
+  config:
+   server:
+    git:
+     uri: https://github.com/ffshen/config-repo
+# 启动端口     
+#server:
+# port: 7001
+# 配置服务注册中心 
+eureka:     
+  client:
+    registerWithEureka: true
+    fetchRegistry: true        
+    serviceUrl:
+      defaultZone: "http://discovery-secondary:8012/eureka/,http://discovery-primary:8011/eureka/"

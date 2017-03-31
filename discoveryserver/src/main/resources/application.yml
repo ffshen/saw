@@ -1,0 +1,60 @@
+---
+spring:
+ application:
+  name: discovery-server-clustered   
+ profiles: primary
+server:
+ port: 8011  
+eureka:
+ instance:
+  hostname: discovery-primary
+  prefer-ip-address: true
+  lease-expiration-duration-in-seconds: 10		# 发呆时间，即服务续约到期时间（缺省为90s）
+  lease-renewal-interval-in-seconds: 5			# 心跳时间，即服务续约间隔时间（缺省为30s）
+ server:
+  enable-self-preservation: true
+  eviction-interval-timer-in-ms: 5000
+  #renewalPercentThreshold: 0.49
+ client:
+  serviceUrl:
+   defaultZone: "http://discovery-secondary:8012/eureka/"
+---
+spring:
+ application:
+  name: discovery-server-clustered      
+ profiles: secondary
+server:
+ port: 8012
+eureka:
+ instance:
+  hostname: discovery-secondary
+  prefer-ip-address: true
+  lease-expiration-duration-in-seconds: 10
+  lease-renewal-interval-in-seconds: 5  
+ server:
+  enable-self-preservation: true
+  eviction-interval-timer-in-ms: 5000
+  #renewalPercentThreshold: 0.49   
+ client:
+  serviceUrl:
+   defaultZone: "http://discovery-tertiary:8013/eureka/"     
+---
+spring:
+ application:
+  name: discovery-server-clustered      
+ profiles: tertiary
+server:
+ port: 8013
+eureka:
+ instance:
+  hostname: discovery-tertiary
+  prefer-ip-address: true
+  lease-expiration-duration-in-seconds: 10
+  lease-renewal-interval-in-seconds: 5  
+ server:
+  enable-self-preservation: true
+  eviction-interval-timer-in-ms: 5000
+  #renewalPercentThreshold: 0.49  
+ client:
+  serviceUrl:
+   defaultZone: "http://discovery-primary:8011/eureka/"            

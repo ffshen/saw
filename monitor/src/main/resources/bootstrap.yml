@@ -1,0 +1,21 @@
+spring:
+ application:
+  name: turbine 
+endpoints:
+ restart:
+  enabled: true
+  
+# 配置监控中心
+turbine:
+ app-config: BUSINESS,PROMOTION
+ combine-host-port: true  
+ aggregator:
+    clusterConfig: MAIN
+ clusterNameExpression: metadata['cluster'] 
+# 配置服务注册中心 
+eureka:     
+  client:
+    registerWithEureka: true
+    fetchRegistry: true        
+    serviceUrl:
+      defaultZone: "http://discovery-secondary:8012/eureka/,http://discovery-primary:8011/eureka/"  

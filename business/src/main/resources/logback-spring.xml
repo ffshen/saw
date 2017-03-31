@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="true">
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+
+    <property name="log_home" value="/saw/logs"/>
+    <property name="log_name" value="business"/>
+    <property name="log_path" value="app"/>
+    <springProperty scope="context" name="prefix" source="spring.profiles.active"/>
+    <springProperty scope="context" name="port" source="server.port"/>
+     
+    <appender name="FILE" class= "ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/saw/logs/${log_name}_${prefix}_${port}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/saw/logs/bak/${log_name}_${prefix}_${port}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+		  <encoder>
+		    <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
+		    <outputPatternAsHeader>true</outputPatternAsHeader>
+		  </encoder>    
+        <append>false</append>
+        <prudent>false</prudent>
+    </appender>
+ 
+
+  <root level="INFO">             
+    <appender-ref ref="FILE" />   
+  </root>    
+    
+
+</configuration>
+
+
+

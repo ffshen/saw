@@ -1,0 +1,19 @@
+spring:
+ application:
+  name: promotion
+ cloud:
+  config:
+   profile: dev
+   discovery:
+    enabled: true
+    serviceId: config-server
+#配置服务注册中心 
+eureka:     
+  instance:
+   metadata-map:
+    cluster: MAIN
+  client:
+    registerWithEureka: true
+    fetchRegistry: true        
+    serviceUrl:
+      defaultZone: "http://discovery-secondary:8012/eureka/,http://discovery-primary:8011/eureka/"     
